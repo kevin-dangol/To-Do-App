@@ -1,3 +1,3 @@
-# basic_todo_app
 
-A new Flutter project.
+# To-Do-App
+A simple todo app made using flutter.
