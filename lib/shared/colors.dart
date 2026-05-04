@@ -1,0 +1,28 @@
+import 'package:flutter/material.dart';
+
+const iconColor = Color.fromARGB(255, 129, 158, 238);
+const iconColorDark = Color.fromARGB(255, 185, 194, 221);
+const bodyColor = Color.fromARGB(255, 52, 81, 161);
+const bodyColorDark = Color.fromARGB(255, 255, 255, 255);
+const textColor = Color.fromARGB(255, 42, 43, 90);
+const textColorDark = Color.fromARGB(255, 255, 255, 255);
+const taskColor = Color.fromARGB(255, 88, 88, 88);
+const taskColorDark = Color.fromARGB(255, 207, 202, 202);
+const tickBorderColor = Color.fromARGB(255, 109, 27, 143);
+const tickBorderColorDark = Color.fromARGB(255, 225, 215, 227);
+const addColor =  Color.fromARGB(255, 238, 5, 255);
+const addColorDark = Color.fromARGB(255, 6, 105, 253);
+const appbarColor =  Color.fromARGB(255, 52, 81, 161);
+const appbarDark =  Color.fromARGB(255, 255, 255, 255);
+const buttonColor = Colors.blueAccent;
+const buttonColorDark = Color.fromARGB(255, 32, 53, 87);
+const createTaskColor = Color.fromARGB(255, 234, 231, 231);
+const createTaskColorDark = Color.fromARGB(255, 5, 25, 86);
+const completedTask = Color.fromARGB(255, 219, 226, 247);
+const completedTaskDark = Color.fromARGB(255, 5, 25, 86);
+const completedText = Color.fromARGB(255, 108, 108, 129);
+const completedTextDark = Color.fromARGB(255, 255, 255, 255);
+const completedTick = Color.fromARGB(255, 167, 177, 216);
+const completedTickDark = Color.fromARGB(255, 48, 75, 163);
+const mainTextColor = Color.fromARGB(255, 42, 43, 90);
+const mainTextColorDark = Color.fromARGB(255, 42, 43, 90);
