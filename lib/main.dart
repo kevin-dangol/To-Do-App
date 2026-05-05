@@ -1,7 +1,9 @@
 // ignore_for_file: unused_local_variable, unused_import
 import 'package:basic_todo_app/models/tasks.dart';
+import 'package:basic_todo_app/screens/category.dart';
 import 'package:basic_todo_app/screens/utils/create_task.dart';
 import 'package:basic_todo_app/screens/home.dart';
+import 'package:basic_todo_app/wapper.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -21,9 +23,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage()
+
+      initialRoute: '/',
+
+      routes: {
+        '/': (context) => Wrapper(),
+        '/home': (context) => HomePage(toggleDrawer: () {}),
+        '/categories': (context) => CategoryPage(toggleDrawer: () {},),
+        '/settings': (context) => Placeholder(),
+      },
     );
   }
 }

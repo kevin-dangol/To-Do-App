@@ -28,7 +28,7 @@ class DatabaseServices{
 
     unfinishedTasks = (db.get('UNFINISHEDTASKS') ?? []).cast<Task>();
     finishedTasks = (db.get('FINISHEDTASKS') ?? []).cast<Task>();
-    isDark = db.get('ISDARK');
+    isDark = db.get('ISDARK') ?? false;
 
   }
 

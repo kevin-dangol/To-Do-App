@@ -1,6 +1,9 @@
+// ignore_for_file: unused_import
+
 import 'package:basic_todo_app/database/database.dart';
 import 'package:basic_todo_app/models/tasks.dart';
 import 'package:basic_todo_app/screens/utils/create_task.dart';
+import 'package:basic_todo_app/screens/utils/funcation.dart';
 import 'package:basic_todo_app/screens/utils/task_tile.dart';
 import 'package:basic_todo_app/shared/colors.dart';
 import 'package:basic_todo_app/shared/functions.dart';
@@ -9,8 +12,10 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage
-({super.key});
+
+  final VoidCallback toggleDrawer;
+
+  const HomePage ({super.key, required this.toggleDrawer});
 
   @override
   State<HomePage
@@ -21,10 +26,11 @@ class _HomePageState extends State<HomePage> {
 
   final db = Hive.box('db');
   DatabaseServices dbs = DatabaseServices();
-  bool isDark = false;
 
   @override
   void initState() {
+
+    super.initState();
 
     if(db.get('UNFINISHEDTASKS') == null && db.get('FINISHEDTASKS') == null) {
 
@@ -33,19 +39,9 @@ class _HomePageState extends State<HomePage> {
     }else{
 
       dbs.loadData();
-      isDark = dbs.isDark;
 
     }
-
-    super.initState();
     
-  }
-
-  void changeTheme(){
-    setState(() {
-      dbs.updateData();
-      isDark = !isDark;
-    });
   }
 
   void changeTask(Task task) {
@@ -55,7 +51,7 @@ class _HomePageState extends State<HomePage> {
 
       if (task.isCompleted) {
 
-        dbs.unfinishedTasks.remove(task); // remove by object
+        dbs.unfinishedTasks.remove(task);
         dbs.finishedTasks.add(task);
         dbs.updateData();
 
@@ -95,11 +91,13 @@ class _HomePageState extends State<HomePage> {
 
       appBar: AppBar(
 
-        backgroundColor: isDark? appbarColor: appbarDark,
+        backgroundColor: dbs.isDark? appbarColor: appbarDark,
 
-        foregroundColor: isDark? iconColorDark:iconColor,
+        foregroundColor: dbs.isDark? iconColorDark:iconColor,
 
         leading: GestureDetector(
+
+          onTap: widget.toggleDrawer,
 
           child: Icon(Icons.menu),
 
@@ -109,9 +107,12 @@ class _HomePageState extends State<HomePage> {
 
           GestureDetector(
             onTap: () {
-              changeTheme();
+              setState(() {
+                dbs.isDark = !dbs.isDark;
+                dbs.updateData();
+              });
             },
-            child: isDark ? Icon(Icons.light_mode,) : Icon(Icons.dark_mode,),
+            child: dbs.isDark ? Icon(Icons.light_mode,) : Icon(Icons.dark_mode,),
           ),
           
         ],
@@ -133,7 +134,7 @@ class _HomePageState extends State<HomePage> {
             context: context,
             isScrollControlled: true,
 
-            backgroundColor: isDark ? bodyColor : bodyColorDark,
+            backgroundColor: dbs.isDark ? bodyColor : bodyColorDark,
 
             shape: RoundedRectangleBorder(
 
@@ -147,7 +148,7 @@ class _HomePageState extends State<HomePage> {
               return SizedBox(
 
                 height: MediaQuery.of(context).size.height * 0.8,
-                child: CreateTask(isDark: isDark),
+                child: CreateTask(isDark: dbs.isDark),
 
               );
 
@@ -165,7 +166,7 @@ class _HomePageState extends State<HomePage> {
         },
 
         foregroundColor: Colors.white,
-        backgroundColor: isDark ? addColorDark : addColorDark,
+        backgroundColor: dbs.isDark ? addColorDark : addColorDark,
 
         shape: CircleBorder(),
 
@@ -177,7 +178,7 @@ class _HomePageState extends State<HomePage> {
 
         child: Container(
           width: double.infinity,
-          color: isDark ? bodyColor : bodyColorDark,
+          color: dbs.isDark ? bodyColor : bodyColorDark,
 
           child: ListView(
             padding: EdgeInsets.all(20),
@@ -194,7 +195,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
 
-                    title('Completed Tasks', isDark),
+                    title('Completed Tasks', dbs.isDark),
 
                     ListView.separated(
                       shrinkWrap: true,
@@ -203,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         final task = dbs.finishedTasks[index];
                         return TaskTile(
-                          isDark: isDark,
+                          isDark: dbs.isDark,
                           tasks: task,
                           changeTask: changeTask,
                           deleteTask: deleteTask,
@@ -213,7 +214,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                     
                     if (dbs.unfinishedTasks.isNotEmpty && dbs.finishedTasks.isEmpty)
-                      emptyMessage("No Task Completed!", isDark),
+                      emptyMessage("No Task Completed!", dbs.isDark),
                   ],
                 ),
               ): SizedBox(),
@@ -230,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
 
-                    title('Tasks', isDark),
+                    title('Tasks', dbs.isDark),
 
                     if (dbs.unfinishedTasks.isNotEmpty)
                       ListView.separated(
@@ -240,7 +241,7 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           final task = dbs.unfinishedTasks[index];
                           return TaskTile(
-                            isDark: isDark,
+                            isDark: dbs.isDark,
                             tasks: task,
                             changeTask: changeTask,
                             deleteTask: deleteTask,
@@ -250,10 +251,10 @@ class _HomePageState extends State<HomePage> {
                       ),
 
                     if (dbs.unfinishedTasks.isEmpty && dbs.finishedTasks.isNotEmpty)
-                      emptyMessage("All Task Completed!", isDark),
+                      emptyMessage("All Task Completed!", dbs.isDark),
 
                     if (dbs.unfinishedTasks.isEmpty && dbs.finishedTasks.isEmpty)
-                      emptyMessage("No tasks added yet.", isDark),
+                      emptyMessage("No tasks added yet.", dbs.isDark),
                   ],
                 ),
               ),
