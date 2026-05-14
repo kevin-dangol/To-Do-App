@@ -19,7 +19,7 @@ class TaskAdapter extends TypeAdapter<Task> {
     return Task(
       title: fields[0] as String,
       description: fields[1] as String?,
-      isCompleted: fields[2] as bool, 
+      isCompleted: fields[2] as bool,
       color: Color.fromARGB(99, 236, 125, 125),
     )..colorValue = fields[3] as int;
   }
