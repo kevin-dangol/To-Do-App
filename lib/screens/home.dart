@@ -185,42 +185,6 @@ class _HomePageState extends State<HomePage> {
 
             children: [
 
-              dbs.finishedTasks.isNotEmpty? Container(
-                padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(25, 0, 0, 0),
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-
-                child: Column(
-                  children: [
-
-                    title('Completed Tasks', dbs.isDark),
-
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemCount: dbs.finishedTasks.length,
-                      itemBuilder: (context, index) {
-                        final task = dbs.finishedTasks[index];
-                        return TaskTile(
-                          isDark: dbs.isDark,
-                          tasks: task,
-                          changeTask: changeTask,
-                          deleteTask: deleteTask,
-                        );
-                      },
-                      separatorBuilder: (_, _) => SizedBox(height: 1),
-                    ),
-                    
-                    if (dbs.unfinishedTasks.isNotEmpty && dbs.finishedTasks.isEmpty)
-                      emptyMessage("No Task Completed!", dbs.isDark),
-                  ],
-                ),
-              ): SizedBox(),
-
-              SizedBox(height: 20,),
-
               Container(
                 padding: EdgeInsets.only(left: 10, right: 10, bottom: 20),
                 decoration: BoxDecoration(
